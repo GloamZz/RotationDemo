@@ -1,18 +1,18 @@
 # RotationDemo
-##屏幕旋转的研究理由：
+## 屏幕旋转的研究理由：
 因为本人从事视频类的iOS开发工作，经常项目中经常会遇到需要在不同的页面对屏幕方向进行控制，例如正常的列表页面都只支持竖屏不能旋转，而播放页面需要能够控制旋转 :
  - 手动点击全屏进入全屏并保持全屏不自动旋转；
  - 旋转屏幕能够屏幕能够自动旋转。
-
 
 相信很多人也在屏幕旋转上遇到过不同的疑惑与阻碍，下面介绍实现方式，以及遇到的坑。
 
 
 ******
-##屏幕旋转基础
+## 屏幕旋转基础
 
 
 ![](https://img-blog.csdnimg.cn/img_convert/4b4b7c5d562c1461f19ad2b3b4d457bd.webp?x-oss-process=image/format,png)
+
 我们能在工程的General里面设置app的方向，如果你全不选似乎是跟全选是一样的效果。
 然后是我们在AppDelegate里也能设置这个属性。
 
@@ -64,7 +64,7 @@ Orientation_Presentation是我们跳转到某一个控制器时，控制器初�
 -(UIInterfaceOrientation)preferredInterfaceOrientationForPresentation 
 ```
 ******
-####介绍完三个标记，我们来看我们怎么通过这个三个标记来控制我们的控制器旋转
+#### 介绍完三个标记，我们来看我们怎么通过这个三个标记来控制我们的控制器旋转
 这里就要说一下了，当我们跳转的时候，会先进入一次新控制器的这个方法（只会进入一次，用于跳转到新控制器的时候初始化新控制器方向Orientation_Presentation）
 ```
 -(UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
@@ -90,7 +90,7 @@ Terminating app due to uncaught exception 'UIApplicationInvalidInterfaceOrientat
 ```
 好的preferredInterfaceOrientationForPresentation这个方法的用途以及如何避免上面这个crash应该解释的很清楚了。
 ******
-####接下来是控制我们控制器旋转的三个方法(iOS6以上，iOS6以下的旋转不再赘述）
+#### 接下来是控制我们控制器旋转的三个方法(iOS6以上，iOS6以下的旋转不再赘述）
 
 
 **注意注意注意！！！**
@@ -252,7 +252,7 @@ if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
 ```
 一定要注意前提，两种旋转都是要在shouldAutorotate返回YES的情况下才能完成的。
 ******
-####学会了旋转，让我们来看看旋转后页面该用什么方式布局
+#### 学会了旋转，让我们来看看旋转后页面该用什么方式布局
 
 
 记住以下几点即可：
@@ -270,7 +270,7 @@ if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
 
 #请阅读完以上屏幕旋转的基本知识，下面我们根据这个理论来总结配置一下我们的工程
 ******
-####1.首先是AppDelegate.m
+#### 1.首先是AppDelegate.m
 ```
 /*
   1.建议去掉General里Device Orientation的勾选用代码方式设置。
@@ -295,7 +295,7 @@ if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
     }
 }
 ```
-####2.自定义BaseTabBarController.m容器
+#### 2.自定义BaseTabBarController.m容器
 
 
 ```
@@ -342,7 +342,7 @@ if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
 
 
 ```
-####2.自定义BaseNavigtionController.m容器
+#### 2.自定义BaseNavigtionController.m容器
 ```
 - (BOOL)shouldAutorotate {
     return [self.topViewController shouldAutorotate];
@@ -361,7 +361,7 @@ if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
 ```
 
 
-####3.自定义BaseViewController.m
+#### 3.自定义BaseViewController.m
 ```
 /*这里按需return旋转策略*/
 - (BOOL)shouldAutorotate {
